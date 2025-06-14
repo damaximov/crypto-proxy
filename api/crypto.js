@@ -1,7 +1,6 @@
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch = require('node-fetch');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   try {
     const [cgRes, fxRes] = await Promise.all([
       fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd'),
@@ -21,4 +20,4 @@ export default async function handler(req, res) {
     console.error('Ошибка при получении курсов:', err);
     res.status(500).json({ error: 'Ошибка при получении данных' });
   }
-}
+};
