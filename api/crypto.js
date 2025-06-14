@@ -1,3 +1,6 @@
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
 export default async function handler(req, res) {
   try {
     const [cgRes, fxRes] = await Promise.all([
@@ -15,6 +18,7 @@ export default async function handler(req, res) {
       rub: fxData.rates.USD
     });
   } catch (err) {
+    console.error('Ошибка при получении курсов:', err);
     res.status(500).json({ error: 'Ошибка при получении данных' });
   }
 }
